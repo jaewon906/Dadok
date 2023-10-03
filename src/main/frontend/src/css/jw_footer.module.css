@@ -1,0 +1,29 @@
+.container{
+    width:100%;
+    height:150px;
+    background-color: rgb(250, 250, 250);
+    border-top: 1px solid rgb(230,230,230);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: kakao;
+    font-size: 12px;
+    line-height: 20px;
+
+}
+.textArea{
+    width:70%;
+    color:rgb(172, 172, 172);
+    display: flex;
+    margin-top: 20px;
+}
+.container > .textArea:nth-child(1){
+    margin-top:30px;
+}
+.textArea > div{
+    padding:0px 20px;
+    border-right: 1px solid rgb(225,225,225);
+}
+.textArea > div:nth-last-child(1){
+    border: none;
+}

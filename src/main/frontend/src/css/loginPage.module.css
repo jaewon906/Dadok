@@ -1,0 +1,111 @@
+.container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+
+}
+.main {
+    margin-top: 100px;
+    width: 408px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.section1{
+    width: 408px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.section1> span{
+    color: #8d8d8d;
+}
+.section1 > h1{
+    font-size: 40px;
+}
+.section2{
+    width: 408px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.iconLogin tr{
+    display: flex;
+}
+.iconLogin td{
+    width: 135px;
+    height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.iconLogin td:nth-child(1), .iconLogin td:nth-child(3){
+    border: 1px solid #d8d8d8;
+    border-left: none;
+    border-right: none;
+}
+.iconLogin td:nth-child(2){
+    border: 1px solid #d8d8d8;
+}
+
+.iconLogin button {
+    width:87px;
+    height: 88px;
+    background-color: white;
+    outline: none;
+    border: none;
+}
+
+.kakaoLogin {
+    background-image: url("../../public/loginImg/icon_kakao.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.naverLogin {
+    background-image: url("../../public/loginImg/icon_naver.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.tossLogin {
+     background-image: url("../../public/loginImg/icon_toss.png");
+     background-position: center center;
+     background-repeat: no-repeat;
+     background-size: cover;
+ }
+.section3{
+    width: 408px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.section3 > button{
+    width: 408px;
+    height: 53px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+.section3 > button:hover{
+    background-color: rgb(106, 169, 250);
+}
+.findIdPw{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.findIdPw > a{
+    color: gray;
+}

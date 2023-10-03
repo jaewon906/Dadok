@@ -1,0 +1,52 @@
+.container {
+    position: relative;
+    width:100vw;
+    height:auto;
+    display: flex;
+    flex-direction:column;
+    background-color:rgb(250, 250, 250);
+
+}
+@media(width<=1440px){
+    .container{
+        width:1440px;
+    }
+}
+a{
+    text-decoration: none;
+}
+/* 전체 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #ffffff;
+}
+
+/* 스크롤바의 색과 모양 */
+::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 3px solid #f5f5f5;
+}
+
+/* 수직 스크롤바의 색과 모양 */
+::-webkit-scrollbar-thumb:vertical {
+  background-color: #d6d6d6;
+}
+
+/* 수평 스크롤바의 색과 모양 */
+::-webkit-scrollbar:horizontal {
+    display: none;
+}
+
+/* 수직 스크롤바의 모양 */
+::-webkit-scrollbar-track:vertical {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+/* 수평 스크롤바의 모양 */
+::-webkit-scrollbar-track:horizontal {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+  
