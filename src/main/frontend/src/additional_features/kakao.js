@@ -10,11 +10,9 @@ export default function OauthLogin() {
             code:code.search.split("code=")[1]
         }
     })
-        .then( (res)=> {
+        .then( ()=> {
             console.log("로그인 완료")
-            console.log(res.data)
-            console.log(res)
-            // window.location.href="/home"
+            window.location.href="/home"
         })
         .catch(err=>{console.error(err)})
 

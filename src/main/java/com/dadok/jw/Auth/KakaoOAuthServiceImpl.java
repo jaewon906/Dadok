@@ -1,6 +1,8 @@
 package com.dadok.jw.Auth;
 
-import jakarta.servlet.http.HttpServletRequest;
+import com.dadok.jw.Common.CreateCookie;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -17,15 +19,19 @@ import java.util.Optional;
 @Slf4j
 public class KakaoOAuthServiceImpl implements KakaoOAuthService{
 
+    private final CreateCookie cookie;
+
     @Override
-    public ResponseEntity<String> login(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletRequest request){
+    public ResponseEntity<Object> login(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletResponse response){
 
         if (logInDTO.isPresent()) {
 
-            KakaoOAuthDTO authenticate = getAuthenticate(logInDTO, request);
-            getUserInfo(authenticate);
+            KakaoOAuthDTO authenticate = getAuthenticate(logInDTO);
 
-            return ResponseEntity.ok(HttpStatus.OK.toString());
+            response.addCookie(cookie.createCookie("accessToken", authenticate.getAccess_token(), 21600 ,"/",true));
+            response.addCookie(cookie.createCookie("refreshToken", authenticate.getRefresh_token(), 5184000 ,"/",true));
+
+            return ResponseEntity.ok().build();
 
         } else
 
@@ -34,7 +40,11 @@ public class KakaoOAuthServiceImpl implements KakaoOAuthService{
     }
 
     @Override
-    public KakaoOAuthDTO getAuthenticate(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletRequest request) {
+    public void logout() {
+
+    }
+    @Override
+    public KakaoOAuthDTO getAuthenticate(Optional<LogInDTO.RequestDTO> logInDTO) {
 
             HttpHeaders headers = new HttpHeaders();
 
@@ -76,45 +86,6 @@ public class KakaoOAuthServiceImpl implements KakaoOAuthService{
                 .token_type(token_type)
                 .build();
 
-
     }
 
-    @Override
-    public void getUserInfo(KakaoOAuthDTO kakao){
-
-        String accessToken = kakao.getAccess_token();
-        String grantType = kakao.getToken_type();
-
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.add(HttpHeaders.AUTHORIZATION, grantType + " ${"+accessToken+"}"); //Bearer 타입의 엑세스토큰
-        headers.add(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded;charset=utf-8"); //카카오에 contents-type을 필수로 보내야함
-
-        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-
-        HttpEntity<MultiValueMap<String, String>> kakaoGetUserRequest = new HttpEntity<>(param, headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> getUserResult = restTemplate.exchange(
-                "https://kapi.kakao.com/v2/user/me?property_keys",
-                HttpMethod.GET,
-                kakaoGetUserRequest,
-                String.class
-        );
-
-        JSONObject jsonObject = new JSONObject(getUserResult.getBody());
-        JSONObject kakaoAccount = new JSONObject(jsonObject.get("kakao_account").toString());
-        JSONObject profile = new JSONObject(kakaoAccount.get("profile").toString());
-
-        String id = jsonObject.get("id").toString();
-        String email = kakaoAccount.get("email").toString();
-        String nickname = profile.get("nickname").toString();
-        String profileImageURL = profile.get("profile_image_url").toString();
-
-    }
-
-    @Override
-    public void logout() {
-
-    }
 }

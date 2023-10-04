@@ -1,12 +1,12 @@
 import style from '../css/jw_header.module.css'
 import {useEffect, useState} from 'react'
 import {Link, useLocation} from 'react-router-dom'
+import getUserInfo from "../additional_features/getUserInfo";
 
 function Header_JW() {
 
     let a = [false, false, false, false]
     const [onOff, setOnOff] = useState(a)
-
     const location = useLocation()
     const endpoint = location.pathname.split('/')[location.pathname.split('/').length - 1]
 
@@ -25,7 +25,8 @@ function Header_JW() {
                 a[3] = true;
                 break;
         }
-    }, [endpoint])
+
+    }, [location])
 
     const onOffFunction = (e) => {
         let b = e.target.id
@@ -41,6 +42,9 @@ function Header_JW() {
 
     const notComplete = () => {
         alert("구현중입니다!")
+    }
+
+    const logout = () => {
     }
 
     return (
@@ -70,18 +74,29 @@ function Header_JW() {
                             </button>
                         </Link>
                     </div>
-                    <div className={style.logIn}>
-                        {"1" ?
-                            <Link to='/login'>
-                                <i style={{marginRight: '5px'}}
-                                   className="fa-solid  fa-arrow-right-to-bracket"/> 로그인
-                            </Link> :
-                            <Link to='/login'>
-                                <i style={{marginRight: '5px'}}
-                                   className="fa-solid  fa-arrow-right-to-bracket"/> 로그아웃
-                            </Link>
-                        }
+                    <div style={{display: 'flex', alignItems:"center"}}>
+                        {getUserInfo(1).length===10 ?
+                            <>
+                                <div className={style.user}>
+                                    <div>반갑습니다. {getUserInfo(0)} 님</div>
+                                    <div><img src={getUserInfo(2)} alt={""}/></div>
+                                </div>
+                            </> :
+                            ""}
+                        <div className={style.logIn}>
+                            {getUserInfo(1).length!==10 ?
+                                <Link to='/login'>
+                                    <i style={{marginRight: '5px'}}
+                                       className="fa-solid  fa-arrow-right-to-bracket"/> 로그인
+                                </Link> :
+                                <Link onClick={logout}>
+                                    <i style={{marginRight: '5px'}}
+                                       className="fa-solid  fa-arrow-right-to-bracket"/> 로그아웃
+                                </Link>
+                            }
+                        </div>
                     </div>
+
                 </div>
             </div>
         </>

@@ -1,13 +1,17 @@
 import Header_JW from "../component/jw_header";
 import style from "../css/loginPage.module.css"
 import {Link} from "react-router-dom";
+import axios from "axios";
 export default function LoginPage() {
 
 
     function loginWithKakao() {
            window.location.href  = `https://kauth.kakao.com/oauth/authorize?client_id=${'ba1dbc690bf2094c4d036e94b7c1e6bc'}&redirect_uri=${'http://localhost:3000/kakao/oauth'}&response_type=code`
     }
-
+    function loginWithNaver() {
+       axios.get("/api/logout")
+        alert("df")
+    }
     function notComplete(){
         window.alert("구현중입니다.")
     }
@@ -30,7 +34,7 @@ export default function LoginPage() {
                                     <button onClick={loginWithKakao} className={style.kakaoLogin}></button>
                                 </td>
                                 <td>
-                                    <button onClick={notComplete} className={style.naverLogin}></button>
+                                    <button onClick={loginWithNaver} className={style.naverLogin}></button>
                                 </td>
                                 <td>
                                     <button onClick={notComplete} className={style.tossLogin}></button>
