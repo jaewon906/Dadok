@@ -23,11 +23,11 @@ import ModalJW from "../component/jw_modal";
 import contentsDatajson from "../data/contentsData";
 import Header_JW from "../component/jw_header";
 import getUserInfo from "../additional_features/getUserInfo";
+import axios from "axios";
 
 let [a, k, c, t, d] = [[], [], [], 0, 0];
 
 function ApplySubscribe_jw() {
-    // const contentsData = useAxios("http://localhost:4001/data"),
     const contentsData = contentsDatajson,
         [filteredData, setFilteredData] = useState([]),
         [onOff, setOnOff] = useState([]),
@@ -60,6 +60,11 @@ function ApplySubscribe_jw() {
         setFilteredData(contentsData());
         let m = [true, false, false, false, false, false, false, false, false];
         setMenuOnOff(m);
+
+        axios.get("/api/reload")
+            .then()
+            .catch()
+
     }, [dispatch, contentsData]);
 
     function notCompleted() {
@@ -108,6 +113,7 @@ function ApplySubscribe_jw() {
 
     // 로그인 후 +담기 버튼을 클릭 시 함수
     function addBtnOnClick(e) {
+
         e.preventDefault();
         const resultData = contentsData().find((x) => x.id === e.target.id);
         [a, c, t, d] = contentsSelect(contentsData(), resultData, e);
@@ -119,7 +125,6 @@ function ApplySubscribe_jw() {
         dispatch(discountRdc(d));
 
         if (key) {
-
             setIsTrue(true);
         } else {
             setIsTrue(false)
@@ -321,43 +326,54 @@ function ApplySubscribe_jw() {
                                     style={isTrue ? {marginTop: 90 + "px"} : null}
                                     className={style.goTOSubscribe}
                                 >
-                                    <div className={style.goTOSubscribeTxt}>
-                                        <div className={style.todaySubscribeIs}>
-                                            오늘은 어떤 상품을
-                                            <br/> 구독할까요?
-                                        </div>
-                                        {getUserInfo() ?
+                                    {!getUserInfo(1) ?
+                                        <div className={style.goTOSubscribeTxt}>
+                                            <div className={style.todaySubscribeIs}>
+                                                오늘은 어떤 상품을
+                                                <br/> 구독할까요?
+                                            </div>
                                             <Link to='/login' className={style.toLogin}>
                                                 로그인 하러 가기
                                                 <i
                                                     style={{marginLeft: "5px"}}
                                                     className="fa-solid fa-arrow-right"
                                                 ></i>
-                                            </Link> :
-                                            ""}
-                                        <div className={style.subscribing}>현재 구독중인 상품</div>
-                                        <div className={style.checkYourContent}>
-                                            {getUserInfo() ?
-                                                <>
-                                                    <div className={style.cautionBtn}>i</div>
-                                                    <pre> </pre>
+                                            </Link>
 
-                                                    <p>로그인 하고 구독중인 상품을 확인해 보세요</p>
-                                                </> :
-                                                ""}
+                                            <div className={style.subscribing}>현재 구독중인 상품</div>
+                                            <div className={style.checkYourContent}>
+                                                <div className={style.cautionBtn}>i</div>
+                                                <pre> </pre>
+                                                <p>로그인 하고 구독중인 상품을 확인해 보세요</p>
+                                            </div>
+                                        </div> :
+                                        <div className={style.goTOSubscribeTxt}>
+                                            <div className={style.todaySubscribeIs}>
+                                                {getUserInfo(0)+"님의"}
+                                                <br/> 11월 예상구독료는
+                                                <br/> - 원
+                                            </div>
+
+
+                                            <div className={style.subscribing}>현재 구독중인 상품</div>
+                                            <div className={style.checkYourContent}>
+                                                {/*<div className={style.cautionBtn}>i</div>*/}
+                                                {/*<pre> </pre>*/}
+                                                {/*<p>로그인 하고 구독중인 상품을 확인해 보세요</p>*/}
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                                 <div className={style.cs}>
                                     <div className={style.csMenuArea1}>
-                                        <Link onClick={notCompleted} style={{color: 'black'}}>
+                                        <Link to={"/"} style={{color: 'black'}}>
                                             <div className={style.csMenuImg1}>
                                                 <img style={{width: '60px'}}
                                                      src={process.env.PUBLIC_URL + '/logo.png'}
                                                      alt=''
                                                 />
                                             </div>
-                                            <div className={style.csMenuTxt1}>Da독소개</div>
+                                            <div className={style.csMenuTxt1}>Da독 소개</div>
                                         </Link>
                                     </div>
                                     <div className={style.csMenuArea2}>

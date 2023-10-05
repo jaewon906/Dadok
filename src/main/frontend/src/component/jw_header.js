@@ -46,9 +46,8 @@ function Header_JW() {
     }
 
     const logout = () => {
-        axios.post("/api/logOut",null)
-            .then(res=>{
-                getUserInfo()
+        axios.post("/api/logout", null)
+            .then(res => {
                 window.location.reload();
             })
             .catch()
@@ -59,7 +58,7 @@ function Header_JW() {
             <div className={style.container}>
                 <div className={style.header}>
                     <div className={style.menu}>
-                        <a href='/' onClick={onOffFunction}><img src={process.env.PUBLIC_URL + '/logo.png'} alt=''/></a>
+                        <a style={{marginLeft:"-30px"}} href='/home' onClick={onOffFunction}><img src={process.env.PUBLIC_URL + '/logo.png'} alt=''/></a>
                         <Link to='/home' className={style.linkStyle}>
                             <button id='header1' onClick={onOffFunction}
                                     className={(onOff[0] ? `${style.selected}` : null)}>구독신청
@@ -81,14 +80,21 @@ function Header_JW() {
                             </button>
                         </Link>
                     </div>
-                    <div style={{display: 'flex', alignItems:"center"}}>
-                        {getUserInfo(1)?
+                    <div style={{display: 'flex', alignItems: "center"}}>
+                        {getUserInfo(1) ?
                             <>
                                 <div className={style.user}>
                                     <div><img src={getUserInfo(2)} alt={""}/></div>
                                 </div>
                             </> :
                             ""}
+                        <div className={style.myInfo}>
+                            <Link to={!getUserInfo(1)?
+                                "/login":
+                                "/home/mySubscribe"}>
+                                <i className="fa-regular fa-user"></i> MY구독
+                            </Link>
+                        </div>
                         <div className={style.logIn}>
                             {!getUserInfo(1) ?
                                 <Link to='/login'>
@@ -102,7 +108,6 @@ function Header_JW() {
                             }
                         </div>
                     </div>
-
                 </div>
             </div>
         </>

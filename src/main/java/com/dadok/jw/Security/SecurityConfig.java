@@ -24,8 +24,10 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .authorizeHttpRequests(
                         http -> {
+                            http.requestMatchers("/api/reload").permitAll();
                             http.requestMatchers("/api/kakaoLogin").permitAll();
-                            http.requestMatchers("/api/logOut").authenticated();
+                            http.requestMatchers("/api/logout").authenticated();
+                            http.requestMatchers("/api/mySubscribe").authenticated();
                         }
                 )
                 .addFilterBefore(new JWTFilter(cookie), UsernamePasswordAuthenticationFilter.class)

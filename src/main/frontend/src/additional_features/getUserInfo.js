@@ -8,8 +8,8 @@ export default function getUserInfo(type) {
 
             return decodeURIComponent(escape(window.atob(encoded))).split(",")[type].split("=")[1].split("}")[0]
         } catch (e) {
-
+            return false
         }
     }
-
+    return false
 };

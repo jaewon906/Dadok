@@ -18,7 +18,7 @@ root.render(
     <Provider store={store}>
         <BrowserRouter>
             <ScrollTop/>
-            <div style={{width:"100vw", height:"auto", minWidth:'1440px'}}>
+            <div style={{width:"100vw", height:"auto", minWidth:'1440px', backgroundColor: "rgb(245,245,245)"}}>
                 <App_jw/>
                 <Footer/>
                 <TopBtn/>

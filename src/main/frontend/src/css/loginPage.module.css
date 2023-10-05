@@ -56,7 +56,7 @@
 .iconLogin button {
     width:87px;
     height: 88px;
-    background-color: white;
+    background-color: transparent;
     outline: none;
     border: none;
 }

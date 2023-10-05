@@ -56,8 +56,6 @@ function SideRightBox(props) {
 
     const [data, setData] = useState([props.data]);
     const [isLoading, setIsLoading] = useState(false);
-    const dispatch = useDispatch();
-
 
     useEffect(() => {
 
@@ -66,6 +64,10 @@ function SideRightBox(props) {
     }, [])
 
     const detailList = data
+
+    const addCart =() =>{
+
+    }
 
     return (
         <>{isLoading ? <div className={style.right_side_box}>
@@ -83,13 +85,13 @@ function SideRightBox(props) {
                                 <p>{'할인가 '+amountNotation(detailList.price - detailList.discount)+'원'}</p>
                                 <span className={style.percent}>{Math.floor(100 * (detailList.discount / detailList.price))+'% 할인'}</span>
                             </div>
-                            <button className={style.right_addbtn}>+ 담기</button>
+                            <button onClick={addCart} className={style.right_addbtn}>+ 담기</button>
                         </div>
                     </div>
                 </div>
 
             </div>
-            <Link to={'/main'} div className={style.right_detailbtn}>
+            <Link to={'/home'} div className={style.right_detailbtn}>
                 다른 구독 상품 보러가기
             </Link>
         </div> : ""}

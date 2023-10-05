@@ -19,6 +19,10 @@ public class AuthController {
 
     private final AuthServiceImpl authServiceImpl;
 
+    @GetMapping("reload")
+    public void reloadUserInfo(){}
+
+
     @GetMapping("/kakaoLogin")
     public Object oauthLogin(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletResponse response) {
 
@@ -26,7 +30,7 @@ public class AuthController {
 
     }
 
-    @PostMapping("/logOut")
+    @PostMapping("/logout")
     public void logOut(HttpServletRequest request, HttpServletResponse response) {
         authServiceImpl.logout(request, response);
     }
