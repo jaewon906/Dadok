@@ -2,6 +2,7 @@ import style from '../css/jw_header.module.css'
 import {useEffect, useState} from 'react'
 import {Link, useLocation} from 'react-router-dom'
 import getUserInfo from "../additional_features/getUserInfo";
+import axios from "axios";
 
 function Header_JW() {
 
@@ -45,6 +46,12 @@ function Header_JW() {
     }
 
     const logout = () => {
+        axios.post("/api/logOut",null)
+            .then(res=>{
+                getUserInfo()
+                window.location.reload();
+            })
+            .catch()
     }
 
     return (
@@ -75,16 +82,15 @@ function Header_JW() {
                         </Link>
                     </div>
                     <div style={{display: 'flex', alignItems:"center"}}>
-                        {getUserInfo(1).length===10 ?
+                        {getUserInfo(1)?
                             <>
                                 <div className={style.user}>
-                                    <div>반갑습니다. {getUserInfo(0)} 님</div>
                                     <div><img src={getUserInfo(2)} alt={""}/></div>
                                 </div>
                             </> :
                             ""}
                         <div className={style.logIn}>
-                            {getUserInfo(1).length!==10 ?
+                            {!getUserInfo(1) ?
                                 <Link to='/login'>
                                     <i style={{marginRight: '5px'}}
                                        className="fa-solid  fa-arrow-right-to-bracket"/> 로그인

@@ -1,7 +1,9 @@
 package com.dadok.jw.Auth;
 
 import com.dadok.jw.Common.CreateCookie;
+import com.dadok.jw.Common.LogoutFailedException;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Component
 @Slf4j
-public class KakaoOAuthServiceImpl implements KakaoOAuthService{
+public class AuthServiceImpl implements KakaoOAuthService{
 
     private final CreateCookie cookie;
 
@@ -31,6 +33,9 @@ public class KakaoOAuthServiceImpl implements KakaoOAuthService{
             response.addCookie(cookie.createCookie("accessToken", authenticate.getAccess_token(), 21600 ,"/",true));
             response.addCookie(cookie.createCookie("refreshToken", authenticate.getRefresh_token(), 5184000 ,"/",true));
 
+            JWTFilter jwtFilter = new JWTFilter(cookie);
+            jwtFilter.getUserInfo(authenticate.getAccess_token(),response);
+
             return ResponseEntity.ok().build();
 
         } else
@@ -40,7 +45,43 @@ public class KakaoOAuthServiceImpl implements KakaoOAuthService{
     }
 
     @Override
-    public void logout() {
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+
+        Cookie[] cookies = request.getCookies();
+
+        String accessToken = "";
+        String refreshToken = "";
+
+        for(Cookie cookie : cookies){
+            switch (cookie.getName()) {
+                case "accessToken" -> accessToken = cookie.getValue();
+                case "refreshToken" -> refreshToken = cookie.getValue();
+            }
+
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.AUTHORIZATION,"Bearer ${"+accessToken+"}");
+
+        HttpEntity<String> httpEntity = new HttpEntity<>("",headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> exchange = restTemplate.exchange(
+                "https://kapi.kakao.com/v1/user/logout",
+                HttpMethod.POST,
+                httpEntity,
+                String.class
+        );
+
+        if(exchange.hasBody()){
+            response.addCookie(cookie.deleteCookie("accessToken"));
+            response.addCookie(cookie.deleteCookie("refreshToken"));
+            response.addCookie(cookie.deleteCookie("userInfo"));
+        }
+        else{
+            throw new LogoutFailedException("로그아웃 실패");
+        }
+
+
 
     }
     @Override

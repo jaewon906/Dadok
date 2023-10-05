@@ -1,9 +1,11 @@
 package com.dadok.jw.Auth;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,13 +17,18 @@ import java.util.Optional;
 @Slf4j
 public class AuthController {
 
-    private final KakaoOAuthServiceImpl kakaoOAuthServiceImpl;
+    private final AuthServiceImpl authServiceImpl;
 
     @GetMapping("/kakaoLogin")
-    public Object oauthLogin(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletResponse  response){
+    public Object oauthLogin(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletResponse response) {
 
-       return kakaoOAuthServiceImpl.login(logInDTO, response);
+        return authServiceImpl.login(logInDTO, response);
 
+    }
+
+    @PostMapping("/logOut")
+    public void logOut(HttpServletRequest request, HttpServletResponse response) {
+        authServiceImpl.logout(request, response);
     }
 
 }

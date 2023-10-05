@@ -22,6 +22,7 @@ import comma from "../additional_features/jw_amount_notation";
 import ModalJW from "../component/jw_modal";
 import contentsDatajson from "../data/contentsData";
 import Header_JW from "../component/jw_header";
+import getUserInfo from "../additional_features/getUserInfo";
 
 let [a, k, c, t, d] = [[], [], [], 0, 0];
 
@@ -325,18 +326,25 @@ function ApplySubscribe_jw() {
                                             오늘은 어떤 상품을
                                             <br/> 구독할까요?
                                         </div>
-                                        <Link to='/login' className={style.toLogin}>
-                                            로그인 하러 가기
-                                            <i
-                                                style={{marginLeft: "5px"}}
-                                                className="fa-solid fa-arrow-right"
-                                            ></i>
-                                        </Link>
+                                        {getUserInfo() ?
+                                            <Link to='/login' className={style.toLogin}>
+                                                로그인 하러 가기
+                                                <i
+                                                    style={{marginLeft: "5px"}}
+                                                    className="fa-solid fa-arrow-right"
+                                                ></i>
+                                            </Link> :
+                                            ""}
                                         <div className={style.subscribing}>현재 구독중인 상품</div>
                                         <div className={style.checkYourContent}>
-                                            <div className={style.cautionBtn}>i</div>
-                                            <pre> </pre>
-                                            로그인 하고 구독중인 상품을 확인해 보세요
+                                            {getUserInfo() ?
+                                                <>
+                                                    <div className={style.cautionBtn}>i</div>
+                                                    <pre> </pre>
+
+                                                    <p>로그인 하고 구독중인 상품을 확인해 보세요</p>
+                                                </> :
+                                                ""}
                                         </div>
                                     </div>
                                 </div>

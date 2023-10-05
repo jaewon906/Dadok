@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         http -> {
                             http.requestMatchers("/api/kakaoLogin").permitAll();
-                            http.requestMatchers("/api/logout").authenticated();
+                            http.requestMatchers("/api/logOut").authenticated();
                         }
                 )
                 .addFilterBefore(new JWTFilter(cookie), UsernamePasswordAuthenticationFilter.class)

@@ -20,6 +20,7 @@ public class CreateCookie {
 
         Cookie cookie = new Cookie(key,"");
         cookie.setMaxAge(0);
+        cookie.setPath("/");
 
         return cookie;
     }

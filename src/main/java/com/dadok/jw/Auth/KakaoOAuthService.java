@@ -13,5 +13,5 @@ public interface KakaoOAuthService {
 
     KakaoOAuthDTO getAuthenticate(Optional<LogInDTO.RequestDTO> logInDTO);
 
-    void logout();
+    void logout(HttpServletRequest request, HttpServletResponse response);
 }
