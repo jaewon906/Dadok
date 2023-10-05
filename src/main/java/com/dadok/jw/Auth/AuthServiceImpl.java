@@ -94,7 +94,7 @@ public class AuthServiceImpl implements KakaoOAuthService{
             MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
             param.add("grant_type", "authorization_code");
             param.add("client_id", "ba1dbc690bf2094c4d036e94b7c1e6bc");
-            param.add("redirect_uri", "http://localhost:3000/kakao/oauth");
+            param.add("redirect_uri", "http://43.201.219.24/kakao/oauth");
             param.add("code", logInDTO.get().getCode());
 
             HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(param, headers);

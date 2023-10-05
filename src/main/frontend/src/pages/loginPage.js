@@ -6,7 +6,7 @@ export default function LoginPage() {
 
 
     function loginWithKakao() {
-           window.location.href  = `https://kauth.kakao.com/oauth/authorize?client_id=${'ba1dbc690bf2094c4d036e94b7c1e6bc'}&redirect_uri=${'http://localhost:3000/kakao/oauth'}&response_type=code`
+           window.location.href  = `https://kauth.kakao.com/oauth/authorize?client_id=${'ba1dbc690bf2094c4d036e94b7c1e6bc'}&redirect_uri=${'http://43.201.219.24/kakao/oauth'}&response_type=code`
     }
     function loginWithNaver() {
        axios.get("/api/logout")
