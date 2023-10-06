@@ -19,11 +19,12 @@ import contentsSelect from "../additional_features/jw_contentsSelect";
 import sessionStorage from "../additional_features/jw_sessionStorage";
 import CanvasImage from "../additional_features/jw_canvasRGB";
 import comma from "../additional_features/jw_amount_notation";
-import ModalJW from "../component/jw_modal";
 import contentsDatajson from "../data/contentsData";
 import Header_JW from "../component/jw_header";
 import getUserInfo from "../additional_features/getUserInfo";
 import axios from "axios";
+import LoginModal from "../component/LoginModal";
+import SubscribeModal from "../component/SubscribeModal";
 
 let [a, k, c, t, d] = [[], [], [], 0, 0];
 
@@ -37,7 +38,8 @@ function ApplySubscribe_jw() {
         key = data.getKeyConvertJS,
         totalPrice = data.totalPrice,
         discount = data.discount,
-        isModal = data.modalOnOff,
+        isModal1 = data.loginModalOnOff,
+        isModal2 = data.subscribeModalOnOff,
         location = useLocation(),
         dispatch = useDispatch();
 
@@ -156,8 +158,9 @@ function ApplySubscribe_jw() {
 
     return (
         <>
+            {(isModal1 === true) ? <LoginModal/> : ""}
+            {(isModal2 === true) ? <SubscribeModal/> : ""}
             <Header_JW/>
-            {(isModal === true) ? <ModalJW visible={isModal}/> : ""}
             <div className={style.container}>
                 <div>
                     <div className={style.main}>

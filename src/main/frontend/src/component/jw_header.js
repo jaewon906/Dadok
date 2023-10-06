@@ -64,7 +64,7 @@ function Header_JW() {
                                     className={(onOff[0] ? `${style.selected}` : null)}>구독신청
                             </button>
                         </Link>
-                        <Link to='/home/myInfo' className={style.linkStyle}>
+                        <Link to='/home/mySubscribe' className={style.linkStyle}>
                             <button id='header2' onClick={onOffFunction}
                                     className={(onOff[1] ? `${style.selected}` : null)}>MY 구독
                             </button>

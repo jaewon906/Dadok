@@ -1,0 +1,43 @@
+.section{
+    width: 100%;
+}
+.noBill {
+    width: 912px;
+    height: 396px;
+    border-radius: 16px;
+    background-color: #ebebeb;
+
+}
+.noBill > div{
+    height: auto;
+}
+.noBill > div > button {
+    width: 203px;
+    height: 39px;
+    border-radius: 8px;
+    margin: 0 auto;
+    background-color: #000;
+    color: white;
+    font-size: 12.5px;
+    font-family: NanumGothicExtraBold;
+}
+.noBill > div > div>img{
+    width: 62px;
+    height: 62px;
+}
+.noBill > div > div {
+    width: 203px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+    color: #888;
+}
+.noBill > div > p {
+    font-size: 15px;
+    color: #888;
+    margin: 9px 0 32px;
+    font-family: NanumGothic;
+    text-align: center;
+    letter-spacing: 0;
+}

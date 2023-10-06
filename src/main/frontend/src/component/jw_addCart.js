@@ -6,10 +6,14 @@ import {
     getKeyConvertJSRdc,
     totalPriceRdc,
     discountRdc,
+    loginModalRdc,
+    subscribeModalRdc
 } from "../data/jw_data";
 import contentsSelect from "../additional_features/jw_contentsSelect";
 import sessionStorage from "../additional_features/jw_sessionStorage";
 import comma from "../additional_features/jw_amount_notation";
+import getUserInfo from "../additional_features/getUserInfo";
+
 // eslint-disable-next-line
 let [a, c, t, d] = [[], [], 0, 0];
 
@@ -43,7 +47,14 @@ function Addcart(props) {
     // 로그인 전 구독하기 버튼 눌렀을 떄
 
     function beforeLogin(e) {
-        alert("구현중입니다.")
+
+        if(getUserInfo(0)){
+            dispatch(subscribeModalRdc())
+        }
+
+        else{
+            dispatch(loginModalRdc())
+        }
     }
 
     return (

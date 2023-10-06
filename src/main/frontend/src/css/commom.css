@@ -1,0 +1,26 @@
+.disp-f{
+    display: flex;
+}
+.disp-f-s-b{
+    display: flex;
+    justify-content: space-between;
+}
+.disp-f-a-c{
+    display: flex;
+    align-items: center;
+}
+.disp-f-d-c{
+    display: flex;
+    flex-direction: column;
+}
+.disp-f-c{
+    display: flex;
+    justify-content: center;
+}
+.disp-f-s-e{
+    display: flex;
+    justify-content: space-evenly;
+}
+.circle{
+    border-radius: 10000px;
+}

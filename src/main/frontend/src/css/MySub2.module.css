@@ -1,0 +1,73 @@
+.section{
+    width: 100%;
+}
+.secHeader{
+    width: 100%;
+    margin-bottom: 30px;
+}
+.secHeader > p{
+    font-size: 26px;
+    font-weight: bold;
+}
+.couponCount{
+    height: 40px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.couponHave{
+    width: 130px;
+    height: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 60px;
+}
+.couponHave:hover{
+    cursor: pointer;
+}
+.count{
+    width: 20px;
+    height: 20px;
+    color: white;
+    font-size: 14px;
+
+}
+
+.noSubCoupons {
+    width: 912px;
+    height: 396px;
+    border-radius: 16px;
+    background-color: #ebebeb;
+    margin: 36px 0 36px 0;
+}
+.noSubCoupons > div{
+    height: auto;
+}
+.noSubCoupons > div > button {
+    width: 203px;
+    height: 39px;
+    border-radius: 8px;
+    margin: 0 auto;
+    background-color: #000;
+    color: white;
+    font-size: 12.5px;
+    font-family: NanumGothicExtraBold;
+}
+.noSubCoupons > div > div>img{
+    width: 62px;
+    height: 62px;
+}
+.noSubCoupons > div > div {
+    width: 203px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+    color: #888;
+}
+.noSubCoupons > div > p {
+    font-size: 15px;
+    color: #888;
+    margin: 9px 0 32px;
+    font-family: NanumGothic;
+    text-align: center;
+    letter-spacing: 0;
+}

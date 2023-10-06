@@ -12,10 +12,7 @@ a{
     font-family: kakao;
     src: url(../font/KakaoRegular.ttf);
 }
-@font-face {
-    font-family: nanumSquareR;
-    src: url(../font/NanumSquareR.ttf);
-}
+
 .container {
     width: 100%;
     height: auto;
@@ -45,6 +42,7 @@ a{
     justify-content: space-around;
     font-family: kakao;
     font-size: 18px;
+
 }
 
 .logIn, .myInfo {
@@ -89,12 +87,13 @@ a>button {
 
 .linkStyle>* {
     font-family: kakao;
-    font-size: 18px;
+    font-size: 16px;
     text-decoration: none;
     transition: color 0.3s;
     color: black;
     border: none;
     background-color: rgb(245,245,245);
+    font-weight: bold;
 }
 
 .linkStyle>*:hover {
