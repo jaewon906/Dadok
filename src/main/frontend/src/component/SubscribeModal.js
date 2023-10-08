@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react"
-import {Link} from 'react-router-dom'
 import style from '../css/subscribeModal.module.css'
 import cmStyle from '../css/commom.css'
 import {useDispatch} from "react-redux"
@@ -20,7 +19,6 @@ export default function SubscribeModal() {
         [b, setB] = useState(),
         dispatch = useDispatch();
 
-    let purchase = false
 
     document.body.style = "overflow:hidden"
 
@@ -86,12 +84,8 @@ export default function SubscribeModal() {
             setAllAgree(false)
         }
 
-        console.log(allAgree)
     }
 
-    const goToPurchase = () =>{
-        purchase = true
-    }
 
     return (
         <>

@@ -160,7 +160,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
     }
 
-    public void getUserInfo(String accessToken, HttpServletResponse response){
+    public Map<String, String> getUserInfo(String accessToken, HttpServletResponse response){
 
         Map<String, String> userInfoJSON = new HashMap<>();
 
@@ -198,6 +198,8 @@ public class JWTFilter extends OncePerRequestFilter {
         String encoded = Base64.getEncoder().encodeToString(userInfoJSON.toString().getBytes());
 
         response.addCookie(cookie.createCookie("userInfo", encoded,21599,"/",false));
+
+        return userInfoJSON;
 
     }
 

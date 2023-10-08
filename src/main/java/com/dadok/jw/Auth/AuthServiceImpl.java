@@ -2,6 +2,8 @@ package com.dadok.jw.Auth;
 
 import com.dadok.jw.Common.CreateCookie;
 import com.dadok.jw.Common.LogoutFailedException;
+import com.dadok.jw.Member.MemberDTO;
+import com.dadok.jw.Member.MemberServiceImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ import java.util.Optional;
 public class AuthServiceImpl implements KakaoOAuthService{
 
     private final CreateCookie cookie;
-
+    private final MemberServiceImpl memberService;
     @Override
     public ResponseEntity<Object> login(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletResponse response){
 
@@ -34,7 +37,14 @@ public class AuthServiceImpl implements KakaoOAuthService{
             response.addCookie(cookie.createCookie("refreshToken", authenticate.getRefresh_token(), 5184000 ,"/",true));
 
             JWTFilter jwtFilter = new JWTFilter(cookie);
-            jwtFilter.getUserInfo(authenticate.getAccess_token(),response);
+            Map<String, String> userInfo = jwtFilter.getUserInfo(authenticate.getAccess_token(), response);
+
+            MemberDTO memberDTO = new MemberDTO();
+            memberDTO.setEmail(userInfo.get("email"));
+            memberDTO.setNickname(userInfo.get("nickname"));
+
+            memberService.autoSignUp(memberDTO);
+
 
             return ResponseEntity.ok().build();
 

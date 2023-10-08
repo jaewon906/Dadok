@@ -12,8 +12,6 @@ export default function LoginModal() {
         dispatch = useDispatch();
     document.body.style = "overflow:hidden"
 
-    console.log("fghjfghhg")
-
     window.onresize = () =>{
         console.log(window.innerWidth)
         setWidth(window.innerWidth)
