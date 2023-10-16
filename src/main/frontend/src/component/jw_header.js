@@ -1,7 +1,7 @@
 import style from '../css/jw_header.module.css'
 import {useEffect, useState} from 'react'
 import {Link, useLocation} from 'react-router-dom'
-import getUserInfo from "../additional_features/getUserInfo";
+import getUserInfo from "../js/getUserInfo";
 import axios from "axios";
 
 function Header_JW() {
@@ -46,7 +46,7 @@ function Header_JW() {
     }
 
     const logout = () => {
-        axios.post("/api/logout", null)
+        axios.post("/api/user/logout", null)
             .then(res => {
                 window.location.reload();
             })
@@ -91,7 +91,7 @@ function Header_JW() {
                         <div className={style.myInfo}>
                             <Link to={!getUserInfo(1)?
                                 "/login":
-                                "/home/mySubscribe"}>
+                                "/home/mySubscribe?menu=MENU1"}>
                                 <i className="fa-regular fa-user"></i> MY구독
                             </Link>
                         </div>

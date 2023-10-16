@@ -111,11 +111,12 @@
 }
 .rightContentArea > .goTOSubscribe{
     width: 332px;
-    height: 272px;
+    min-height: 272px;
+    height: auto;
     border-radius: 10px;
     background-color: white;
     box-shadow: 1px 1px 2px 1px rgb(207, 207, 207);
-    
+    padding-bottom: 15px;
 }
 .goTOSubscribe > .goTOSubscribeTxt{
     width: auto;
@@ -145,6 +146,21 @@
     font-size: 14px;
     display: flex;
     color:rgb(200, 208, 208)
+}
+.goTOSubscribeTxt > .yourContent{
+    margin-top: 15px;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap; /* 이미지가 영역을 벗어나면 줄바꿈되도록 설정 */
+    max-width: 100%; /* 부모 요소 너비를 넘지 않도록 설정 */
+
+}
+.yourContent > div> img{
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    border: 1px solid #e5e5e5;
+    margin: 0 5px 0 0;
 }
 .rightContentArea > .cs{
     width:332px;

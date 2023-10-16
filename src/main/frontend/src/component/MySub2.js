@@ -1,5 +1,5 @@
 import style from "../css/MySub2.module.css"
-import getUserInfo from "../additional_features/getUserInfo";
+import getUserInfo from "../js/getUserInfo";
 import cmStyle from "../css/commom.css"
 import {useState} from "react";
 export default function MySub2() {

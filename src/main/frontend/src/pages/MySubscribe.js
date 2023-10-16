@@ -20,7 +20,7 @@ function MySubscribe() {
 
     useLayoutEffect(() => {
 
-        axios.get(`/api/mySubscribe?menu=${menu}`)
+        axios.get(`/api/user/mySubscribe?menu=${menu}`)
             .then(res => {
                 setLoading(true)
             })
@@ -63,19 +63,19 @@ function MySubscribe() {
                                 </Link>
 
                                 <Link className={style.leftMenu} to={"?menu=MENU4"}>
-                                    <p style={menu === "MENU4" ? {color: "rgb(64, 143, 247)"} : {}}>요금제 상품</p>
+                                    <p style={menu === "MENU4" ? {color: "rgb(64, 143, 247)"} : {}}>구독료 결제 정보</p>
                                     <p style={menu === "MENU4" ? {color: "rgb(64, 143, 247)"} : {}}><i
                                         className="fa-solid fa-chevron-right"></i></p>
                                 </Link>
 
                                 <Link className={style.leftMenu} to={"?menu=MENU5"}>
-                                    <p style={menu === "MENU5" ? {color: "rgb(64, 143, 247)"} : {}}>구독료 결제 정보</p>
+                                    <p style={menu === "MENU5" ? {color: "rgb(64, 143, 247)"} : {}}>요금제 상품</p>
                                     <p style={menu === "MENU5" ? {color: "rgb(64, 143, 247)"} : {}}><i
                                         className="fa-solid fa-chevron-right"></i></p>
                                 </Link>
 
                                 <Link className={style.leftMenu} to={"?menu=MENU6"}>
-                                    <p style={menu === "MENU6" ? {color: "rgb(64, 143, 247)"} : {}}>MY 리뷰</p>
+                                    <p style={menu === "MENU6" ? {color: "rgb(64, 143, 247)"} : {}}>내 정보</p>
                                     <p style={menu === "MENU6" ? {color: "rgb(64, 143, 247)"} : {}}><i
                                         className="fa-solid fa-chevron-right"></i></p>
                                 </Link>

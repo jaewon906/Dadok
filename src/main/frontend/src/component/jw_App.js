@@ -5,7 +5,7 @@ import React from "react";
 import Mj_detail_page from "../pages/mj_detail_page";
 import MySubscribe from "../pages/MySubscribe";
 import LoginPage from "../pages/loginPage";
-import OauthLogin from "../additional_features/kakao";
+import OauthLogin from "../js/loginLoading";
 
 function App_jw() {
     return (

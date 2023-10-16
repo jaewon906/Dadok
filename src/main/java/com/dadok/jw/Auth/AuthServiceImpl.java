@@ -1,8 +1,11 @@
 package com.dadok.jw.Auth;
 
 import com.dadok.jw.Common.CreateCookie;
+import com.dadok.jw.Common.CreateUserNumber;
+import com.dadok.jw.Common.HOMEURL;
 import com.dadok.jw.Common.LogoutFailedException;
 import com.dadok.jw.Member.MemberDTO;
+import com.dadok.jw.Member.MemberRepository;
 import com.dadok.jw.Member.MemberServiceImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +29,7 @@ public class AuthServiceImpl implements KakaoOAuthService{
 
     private final CreateCookie cookie;
     private final MemberServiceImpl memberService;
+    private final MemberRepository memberRepository;
     @Override
     public ResponseEntity<Object> login(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletResponse response){
 
@@ -36,12 +40,13 @@ public class AuthServiceImpl implements KakaoOAuthService{
             response.addCookie(cookie.createCookie("accessToken", authenticate.getAccess_token(), 21600 ,"/",true));
             response.addCookie(cookie.createCookie("refreshToken", authenticate.getRefresh_token(), 5184000 ,"/",true));
 
-            JWTFilter jwtFilter = new JWTFilter(cookie);
+            JWTFilter jwtFilter = new JWTFilter(cookie, memberRepository);
             Map<String, String> userInfo = jwtFilter.getUserInfo(authenticate.getAccess_token(), response);
 
             MemberDTO memberDTO = new MemberDTO();
             memberDTO.setEmail(userInfo.get("email"));
             memberDTO.setNickname(userInfo.get("nickname"));
+            memberDTO.setUserNumber(userInfo.get("userNumber"));
 
             memberService.autoSignUp(memberDTO);
 
@@ -57,32 +62,16 @@ public class AuthServiceImpl implements KakaoOAuthService{
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response) {
 
-        Cookie[] cookies = request.getCookies();
-
-        String accessToken = "";
-        String refreshToken = "";
-
-        for(Cookie cookie : cookies){
-            switch (cookie.getName()) {
-                case "accessToken" -> accessToken = cookie.getValue();
-                case "refreshToken" -> refreshToken = cookie.getValue();
-            }
-
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION,"Bearer ${"+accessToken+"}");
-
-        HttpEntity<String> httpEntity = new HttpEntity<>("",headers);
-
         RestTemplate restTemplate = new RestTemplate();
+
         ResponseEntity<String> exchange = restTemplate.exchange(
-                "https://kapi.kakao.com/v1/user/logout",
-                HttpMethod.POST,
-                httpEntity,
+                "https://kauth.kakao.com/oauth/logout?client_id=ba1dbc690bf2094c4d036e94b7c1e6bc"+"&logout_redirect_uri="+HOMEURL.DEVELOPMENT.getHomeUrl(),
+                HttpMethod.GET,
+               null,
                 String.class
         );
 
-        if(exchange.hasBody()){
+        if(exchange.getStatusCode().is3xxRedirection()){
             response.addCookie(cookie.deleteCookie("accessToken"));
             response.addCookie(cookie.deleteCookie("refreshToken"));
             response.addCookie(cookie.deleteCookie("userInfo"));
@@ -90,7 +79,6 @@ public class AuthServiceImpl implements KakaoOAuthService{
         else{
             throw new LogoutFailedException("로그아웃 실패");
         }
-
 
 
     }

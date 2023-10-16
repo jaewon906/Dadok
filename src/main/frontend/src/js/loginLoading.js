@@ -5,7 +5,7 @@ export default function OauthLogin() {
 
     const code = useLocation()
 
-    axios.get("/api/kakaoLogin",{
+    axios.get("/api/user/kakaoLogin",{
         params:{
             code:code.search.split("code=")[1]
         }

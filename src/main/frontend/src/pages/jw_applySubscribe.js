@@ -1,6 +1,6 @@
 //useRef 는 직접 DOM 요소를 건들여야할 때 해당하는 요소에 ref={name}을 부여하고
 // const aa = useRef(name) 으로 하면 aa는 name에 해당하는 요소들을 가져올 수 있다.
-import React, {useEffect, useState, useRef} from "react";
+import React, {useEffect, useState, useRef, useLayoutEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Swiper, SwiperSlide} from "swiper/react";
@@ -15,16 +15,17 @@ import {
 } from "../data/jw_data";
 import {useLocation} from 'react-router-dom';
 // import useAxios from "../additional_features/jw_useAxios";
-import contentsSelect from "../additional_features/jw_contentsSelect";
-import sessionStorage from "../additional_features/jw_sessionStorage";
-import CanvasImage from "../additional_features/jw_canvasRGB";
-import comma from "../additional_features/jw_amount_notation";
+import contentsSelect from "../js/jw_contentsSelect";
+import sessionStorage from "../js/jw_sessionStorage";
+import CanvasImage from "../js/jw_canvasRGB";
+import comma from "../js/jw_amount_notation";
 import contentsDatajson from "../data/contentsData";
 import Header_JW from "../component/jw_header";
-import getUserInfo from "../additional_features/getUserInfo";
+import getUserInfo from "../js/getUserInfo";
 import axios from "axios";
 import LoginModal from "../component/LoginModal";
 import SubscribeModal from "../component/SubscribeModal";
+import {month} from "../js/month";
 
 let [a, k, c, t, d] = [[], [], [], 0, 0];
 
@@ -41,7 +42,8 @@ function ApplySubscribe_jw() {
         isModal1 = data.loginModalOnOff,
         isModal2 = data.subscribeModalOnOff,
         location = useLocation(),
-        dispatch = useDispatch();
+        dispatch = useDispatch(),
+        [mySubscription, setMySubscription] = useState([{}]);
 
     const canvasRef = useRef(null);
 
@@ -145,6 +147,39 @@ function ApplySubscribe_jw() {
     //  즉 버튼을 누를 때 마다 실행. onOff.include(true) 함수는 onOff 배열 중 하나라도 true가 있는지
     //  검사해주는 함수이다. 하나라도 일치하면 true, 아니면 false
 
+
+    useLayoutEffect(() => {
+        const userNumber = getUserInfo(3);
+
+        if (userNumber) {
+            axios.get("/api/user/getSubs", {
+                params: {
+                    userNumber: userNumber
+                }
+            })
+                .then(res=> {
+                    setMySubscription(res.data)
+                })
+                .catch()
+        }
+    }, [])
+
+
+    const subsFee = () => {
+
+        let totalPrice = 0;
+
+        try{
+            mySubscription.map((el,idx)=>{
+                totalPrice += el.price - el.discount
+            })
+        }catch (e){
+            console.warn("신청하신 구독 서비스가 없습니다.")
+        }
+
+        return totalPrice.toLocaleString('en-US');
+
+    }
 
     useEffect(() => {
 
@@ -352,17 +387,21 @@ function ApplySubscribe_jw() {
                                         </div> :
                                         <div className={style.goTOSubscribeTxt}>
                                             <div className={style.todaySubscribeIs}>
-                                                {getUserInfo(0)+"님의"}
-                                                <br/> 11월 예상구독료는
-                                                <br/> - 원
+                                                {getUserInfo(0) + "님의"}
+                                                <br/> {month()}월 예상구독료는
+                                                <br/> {subsFee()} 원
                                             </div>
 
 
                                             <div className={style.subscribing}>현재 구독중인 상품</div>
-                                            <div className={style.checkYourContent}>
-                                                {/*<div className={style.cautionBtn}>i</div>*/}
-                                                {/*<pre> </pre>*/}
-                                                {/*<p>로그인 하고 구독중인 상품을 확인해 보세요</p>*/}
+                                            <div className={style.yourContent}>
+                                                {mySubscription.map((el,idx)=>{
+                                                    return(
+                                                        <div>
+                                                            <img src={el.url} alt={""}/>
+                                                        </div>
+                                                    )
+                                                })}
                                             </div>
                                         </div>
                                     }

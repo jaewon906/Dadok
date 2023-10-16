@@ -3,7 +3,7 @@ import style from '../css/subscribeModal.module.css'
 import cmStyle from '../css/commom.css'
 import {useDispatch} from "react-redux"
 import {subscribeModalRdc} from "../data/jw_data";
-import getUserInfo from "../additional_features/getUserInfo";
+import getUserInfo from "../js/getUserInfo";
 import Payment from "../js/Payment";
 
 let t1 = false,
@@ -108,8 +108,8 @@ export default function SubscribeModal() {
                                     <td>{getUserInfo(0)}</td>
                                 </tr>
                                 <tr>
-                                    <td>ID</td>
-                                    <td>{getUserInfo(3)}</td>
+                                    <td>Email</td>
+                                    <td>{getUserInfo(4)}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -191,7 +191,7 @@ export default function SubscribeModal() {
                     </div>
                     <div className={style.modalFooter}>
                         {allAgree ?
-                            <Payment username={getUserInfo(0)} email={getUserInfo(3)} price={""}/> :
+                            <Payment username={getUserInfo(0)} email={getUserInfo(4)} price={""}/> :
                             <div className={style.notPurchaseBtn}>약관 동의하고 구독서비스 가입하기</div>
                         }
                     </div>

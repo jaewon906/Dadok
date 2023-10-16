@@ -1,7 +1,10 @@
 import style from "../css/MySub1.module.css";
-import getUserInfo from "../additional_features/getUserInfo";
+import getUserInfo from "../js/getUserInfo";
 import cmStyle from "../css/commom.css"
+import {month} from "../js/month";
 export default function MySub1() {
+
+
     return(
         <div className={style.section}>
             <div className={[style.banner, "disp-f-s-b"].join(" ")}>
@@ -19,7 +22,7 @@ export default function MySub1() {
                         </li>
                         <li>
                             <div className={style.subTotal}>
-                                <p>{11}월 예상 구독료</p>
+                                <p>{month()}월 예상 구독료</p>
                                 <p>월 {0}원</p>
                             </div>
                         </li>

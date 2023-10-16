@@ -1,6 +1,9 @@
 package com.dadok.jw.Auth;
 
 import com.dadok.jw.Common.CreateCookie;
+import com.dadok.jw.Common.CreateUserNumber;
+import com.dadok.jw.Member.MemberEntity;
+import com.dadok.jw.Member.MemberRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -21,16 +24,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
 
     private final CreateCookie cookie;
+    private final MemberRepository memberRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -189,17 +190,31 @@ public class JWTFilter extends OncePerRequestFilter {
         String email = kakaoAccount.get("email").toString();
         String nickname = profile.get("nickname").toString();
         String profileImageURL = profile.get("profile_image_url").toString();
+        String userNumber = getUserNumber(email);
 
         userInfoJSON.put("id", id);
         userInfoJSON.put("email", email);
         userInfoJSON.put("nickname", nickname);
         userInfoJSON.put("profileImageURL", profileImageURL);
+        userInfoJSON.put("userNumber", userNumber);
 
         String encoded = Base64.getEncoder().encodeToString(userInfoJSON.toString().getBytes());
 
         response.addCookie(cookie.createCookie("userInfo", encoded,21599,"/",false));
 
         return userInfoJSON;
+
+    }
+
+    private String getUserNumber(String email){
+        Optional<MemberEntity> allByEmail = memberRepository.findAllByEmail(email);
+
+        if(allByEmail.isEmpty()){
+            return CreateUserNumber.createUserNumber();
+        }
+        else{
+            return allByEmail.get().getUserNumber();
+        }
 
     }
 

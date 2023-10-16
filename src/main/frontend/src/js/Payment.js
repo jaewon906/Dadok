@@ -1,14 +1,14 @@
 import style from "../css/subscribeModal.module.css";
 import axios from "axios";
+import getUserInfo from "./getUserInfo";
 
 export default function Payment(props) {
 
     const username = props.username
     const email = props.email
-    const userNumber = props.userNumber
+    const userNumber = getUserInfo(3)
     const price = props.price
 
-    // 값을 못 불러오는거 : 주소, 이름, 전화번호
     function onClickPayment() {
         /* 1. 가맹점 식별하기 */
         const {IMP} = window;
@@ -65,29 +65,18 @@ export default function Payment(props) {
             card_number
         } = response;
 
-        if (success) {
+        if (!success) {
 
             const sessionStorage = window.sessionStorage
 
-            let purchasedList = []
-            let amounts = []
+            let items = sessionStorage.getItem("key");
+            const a= encodeURIComponent(items.toString())
 
-            for (let i = 0; i < sessionStorage.length; i++) {
-
-                let isbn = sessionStorage.key(i);
-                let amount = sessionStorage.getItem(isbn);
-                purchasedList[i] = isbn
-                amounts[i] = amount
-
-            }
-
-            axios.post(process.env.REACT_APP_DB_HOST+"/api/user/purchase/purchasedList", {}, {
+            console.log(a)
+            axios.post("/api/user/order", null, {
                 params: {
-                    purchasedList: purchasedList.join(","),
-                    amount: amounts.join(","),
-                    userNumber: userNumber,
-                    totalPrice: props.price,
-                    orderNumber: merchant_uid.split("_")[1]
+                    items:a,
+                    userNumber : userNumber
                 }
             })
                 .then(() => {

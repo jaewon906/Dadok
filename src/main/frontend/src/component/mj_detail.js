@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import style from '../css/mj_detail.module.css'
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import amountNotation from "../additional_features/jw_amount_notation";
+import amountNotation from "../js/jw_amount_notation";
 
 
 

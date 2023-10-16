@@ -9,10 +9,10 @@ import {
     loginModalRdc,
     subscribeModalRdc
 } from "../data/jw_data";
-import contentsSelect from "../additional_features/jw_contentsSelect";
-import sessionStorage from "../additional_features/jw_sessionStorage";
-import comma from "../additional_features/jw_amount_notation";
-import getUserInfo from "../additional_features/getUserInfo";
+import contentsSelect from "../js/jw_contentsSelect";
+import sessionStorage from "../js/jw_sessionStorage";
+import comma from "../js/jw_amount_notation";
+import getUserInfo from "../js/getUserInfo";
 
 // eslint-disable-next-line
 let [a, c, t, d] = [[], [], 0, 0];
@@ -23,6 +23,7 @@ function Addcart(props) {
         contentsData = data.contentsData,
         dispatch = useDispatch(),
         [expectedPrice, setExpectedPrice] = useState(0);
+
     useEffect(() => {
         setExpectedPrice(
             Math.round(

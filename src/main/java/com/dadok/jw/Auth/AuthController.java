@@ -23,14 +23,14 @@ public class AuthController {
     public void reloadUserInfo(){}
 
 
-    @GetMapping("/kakaoLogin")
+    @GetMapping("/user/kakaoLogin")
     public Object oauthLogin(Optional<LogInDTO.RequestDTO> logInDTO, HttpServletResponse response) {
 
         return authServiceImpl.login(logInDTO, response);
 
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/user/logout")
     public void logOut(HttpServletRequest request, HttpServletResponse response) {
         authServiceImpl.logout(request, response);
     }

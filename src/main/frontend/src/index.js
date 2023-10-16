@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import ScrollTop from "./additional_features/jw_scrollTop";
+import ScrollTop from "./js/jw_scrollTop";
 import rootReducer from "./data/jw_combineReducers";
 import {configureStore} from '@reduxjs/toolkit';
 import {Provider} from 'react-redux';
